@@ -54,6 +54,8 @@ result_filename = "fullTaskReLambda.txt"
 n = 22
 R = np.logspace(3.8, 6.2, n)
 p = np.zeros(n)
+yPlus = np.zeros((3, n))
+
 
 for i in range(n):
 
@@ -68,10 +70,10 @@ for i in range(n):
     subprocess.run([path + "Allrun"], check=True)
     
     p_data = np.loadtxt(path + "postProcessing/probes/0/p", comments='#')
-
+    yPlus_data = np.loadtxt(path + "postProcessing/yPlus/0/yPlus.dat", comments='#')
 
     p[i] = p_data[-1][1]
-
+    yPlus[:, i] = yPlus_data[-1][]
     np.savetxt(result_filename, np.array([R[:i+1], Lambda(p, R)[:i+1]]).T)
 
     plt.plot(p_data.T[0, 10:], p_data.T[1, 10:])

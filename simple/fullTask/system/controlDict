@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1.1063362395234455;
+endTime         0.38613954577664994;
 
 deltaT          1e-4;
 
 writeControl    adjustable;
 
-writeInterval         0.11063362395234455;
+writeInterval         0.03861395457766499;
 
 purgeWrite      0;
 
@@ -62,6 +62,11 @@ functions
             (0 0 0.55) // точка на выходе
         );
         fields (p);
+    }
+    yPlus
+    {
+        type            yPlus;
+        libs            ("libfieldFunctionObjects.so");
     }
 }
 // ************************************************************************* //
