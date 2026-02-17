@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.38613954577664994;
+endTime         0.006119899374414394;
 
-deltaT          1e-4;
+deltaT          1e-3;
 
 writeControl    adjustable;
 
-writeInterval         0.03861395457766499;
+writeInterval         0.0006119899374414394;
 
 purgeWrite      0;
 
@@ -67,6 +67,16 @@ functions
     {
         type            yPlus;
         libs            ("libfieldFunctionObjects.so");
+        writeFields     false;  // Отключает запись полей в папки временных шагов
+        writeToFile     true;   // Включает запись в yPlus.dat
+    }
+    cellSize
+    {
+        type            cellSize;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+        writeFields     false;
+        log             true;
     }
 }
 // ************************************************************************* //

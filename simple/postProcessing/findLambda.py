@@ -47,7 +47,8 @@ def ReToU(Re, D=0.01, nu=1e-6):
     return nu * Re / D
 
 
-path = "/home/user/OpenFOAM/user-v2412/run/turbPipeFlow/simple/fullTask/"
+# path = "/home/user/OpenFOAM/user-v2412/run/turbPipeFlow/simple/fullTask/"
+path = "/home/gomerpavyk/OpenFOAM/gomerpavyk-v2412/run/turbPipeFlow/simple/fullTask/"
 result_filename = "fullTaskReLambda.txt"
 
 
@@ -62,7 +63,7 @@ for i in range(n):
     U = ReToU(R[i])
 
     setU(path, U)
-    setControlDict(path, U, L = 10.0)
+    setControlDict(path, U, L = 1.0)
     
     print(i, R[i], U)
 
@@ -70,15 +71,36 @@ for i in range(n):
     subprocess.run([path + "Allrun"], check=True)
     
     p_data = np.loadtxt(path + "postProcessing/probes/0/p", comments='#')
-    yPlus_data = np.loadtxt(path + "postProcessing/yPlus/0/yPlus.dat", comments='#')
+    yPlus_data = np.loadtxt(path + "postProcessing/yPlus/0/yPlus.dat",     
+                            comments='#',  # Пропускаем строки, начинающиеся с #
+                            usecols=(0, 2, 3, 4)
+                            )
 
     p[i] = p_data[-1][1]
-    yPlus[:, i] = yPlus_data[-1][]
-    np.savetxt(result_filename, np.array([R[:i+1], Lambda(p, R)[:i+1]]).T)
+    yPlus[0, i] = yPlus_data[-1][1]
+    yPlus[1, i] = yPlus_data[-1][2]
+    yPlus[2, i] = yPlus_data[-1][3]
 
-    plt.plot(p_data.T[0, 10:], p_data.T[1, 10:])
+    np.savetxt(result_filename, np.array([R[:i+1], Lambda(p, R)[:i+1], yPlus[0, :i+1], yPlus[1, :i+1], yPlus[2, :i+1]]).T)
+
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+    ax2 = ax1.twinx()
+
+    ax1.plot(p_data.T[0, 10:], p_data.T[1, 10:])
+    ax1.set_ylabel('p', color='tab:blue')
+    ax1.tick_params(axis='y', labelcolor='tab:blue')
+
+    ax1.set_xlabel('Time')
+
+
+    ax2.plot(yPlus_data.T[0, 10:], yPlus_data.T[3, 10:])
+    ax2.set_ylabel('Average y+', color='tab:green')
+    ax2.tick_params(axis='y', labelcolor='tab:green')
+
+    # Отображение
+    plt.grid(True)
+    plt.tight_layout()
     plt.show()
-
 
 
 
