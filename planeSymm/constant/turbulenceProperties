@@ -18,7 +18,7 @@ simulationType      RAS;
 
 RAS
 {
-                                                                                                                                                                        RASModel    LamBremhorstKE;
+                                                                                                                                                                            RASModel    LaunderSharmaKE;
 
     turbulence      on;
 
