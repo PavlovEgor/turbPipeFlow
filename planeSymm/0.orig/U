@@ -9,63 +9,38 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      fvSolution;
+    class       volVectorField;
+    object      U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
 {
-    p
+    inlet
     {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-08;
-        relTol          0.01;
+        type            fixedValue;
+        value           uniform (0 0 9.999999999999998);
     }
 
-    "(U|k|epsilon)"
+    outlet
     {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-07;
-        relTol          0.1;
+        type            zeroGradient;
     }
 
-    cellDisplacement
+    pipe
     {
-        $p;
-        relTol          0;
+        type            noSlip;
+    }
+
+    "(symX|symY)"
+    {
+        type            symmetryPlane;
     }
 }
 
-SIMPLE
-{
-    nNonOrthogonalCorrectors 2;
-    pRefCell        0;
-    pRefValue       0;
-
-    residualControl
-    {
-        p               1e-2;
-        U               1e-4;
-
-        // possibly check turbulence fields
-        "(k|epsilon|omega)" 1e-3;
-    }
-}
-
-relaxationFactors
-{
-    fields
-    {
-        p           0.7;
-    }
-    equations
-    {
-        U               0.2;
-        "(k|epsilon)"   0.7;
-    }
-}
 
 // ************************************************************************* //

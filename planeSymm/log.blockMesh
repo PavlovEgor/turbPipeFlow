@@ -8,12 +8,12 @@
 Build  : _f00230df-20250528 OPENFOAM=2412 patch=250528 version=v2412
 Arch   : "LSB;label=32;scalar=64"
 Exec   : blockMesh
-Date   : Feb 18 2026
-Time   : 13:22:01
+Date   : Feb 19 2026
+Time   : 19:10:23
 Host   : user-OptiPlex-5050
-PID    : 15023
+PID    : 64421
 I/O    : uncollated
-Case   : /home/user/OpenFOAM/user-v2412/run/tests/tube/simple/fullTask
+Case   : /home/user/OpenFOAM/user-v2412/run/tests/tube/planeSymm
 nProcs : 1
 trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
@@ -34,9 +34,9 @@ Creating block mesh topology - scaling/transform applied later
 Check topology
 
 	Basic statistics
-		Number of internal faces : 8
-		Number of boundary faces : 14
-		Number of defined boundary faces : 14
+		Number of internal faces : 3
+		Number of boundary faces : 12
+		Number of defined boundary faces : 12
 		Number of undefined boundary faces : 0
 	Checking patch -> block consistency
 
@@ -48,29 +48,19 @@ Creating patches
 Creating cells
 Creating points with scale (0.001 0.001 0.001)
     Block 0 cell size :
-        i : 0.000416667 .. 0.000416667
-        j : 0.000531836 .. 0.000106367
-        k : 0.0011 .. 0.0011
+        i : 0.000555556 .. 0.000555556
+        j : 0.000555556 .. 0.000555556
+        k : 0.00166667 .. 0.00166667
 
     Block 1 cell size :
-        i : 0.000416667 .. 0.000416667
-        j : 0.000531836 .. 0.000106367
-        k : 0.0011 .. 0.0011
+        i : 0.000555556 .. 0.000555556
+        j : 0.000460066 .. 0.000230033
+        k : 0.00166667 .. 0.00166667
 
     Block 2 cell size :
-        i : 0.000416667 .. 0.000416667
-        j : 0.000531836 .. 0.000106367
-        k : 0.0011 .. 0.0011
-
-    Block 3 cell size :
-        i : 0.000416667 .. 0.000416667
-        j : 0.000531836 .. 0.000106367
-        k : 0.0011 .. 0.0011
-
-    Block 4 cell size :
-        i : 0.000416667 .. 0.000416667
-        j : 0.000416667 .. 0.000416667
-        k : 0.0011 .. 0.0011
+        i : 0.000555556 .. 0.000555556
+        j : 0.000364783 .. 0.000182392
+        k : 0.00166667 .. 0.00166667
 
 No patch pairs to merge
 
@@ -78,17 +68,19 @@ Writing polyMesh with 0 cellZones
 ----------------
 Mesh Information
 ----------------
-  boundingBox: (-0.005 -0.005 0) (0.005 0.005 0.55)
-  nPoints: 168837
-  nCells: 162000
-  nFaces: 492324
-  nInternalFaces: 479676
+  boundingBox: (0 0 0) (0.005 0.005 0.55)
+  nPoints: 28466
+  nCells: 22770
+  nFaces: 73659
+  nInternalFaces: 62961
 ----------------
 Patches
 ----------------
-  patch 0 (start: 479676 size: 324) name: inlet
-  patch 1 (start: 480000 size: 324) name: outlet
-  patch 2 (start: 480324 size: 12000) name: pipe
+  patch 0 (start: 62961 size: 69) name: inlet
+  patch 1 (start: 63030 size: 69) name: outlet
+  patch 2 (start: 63099 size: 1980) name: pipe
+  patch 3 (start: 65079 size: 4290) name: symY
+  patch 4 (start: 69369 size: 4290) name: symX
 
 End
 

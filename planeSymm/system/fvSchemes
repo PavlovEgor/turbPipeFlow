@@ -10,62 +10,55 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSolution;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+ddtSchemes
 {
-    p
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-08;
-        relTol          0.01;
-    }
-
-    "(U|k|epsilon)"
-    {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-07;
-        relTol          0.1;
-    }
-
-    cellDisplacement
-    {
-        $p;
-        relTol          0;
-    }
+    default         steadyState;
 }
 
-SIMPLE
+gradSchemes
 {
-    nNonOrthogonalCorrectors 2;
-    pRefCell        0;
-    pRefValue       0;
-
-    residualControl
-    {
-        p               1e-2;
-        U               1e-4;
-
-        // possibly check turbulence fields
-        "(k|epsilon|omega)" 1e-3;
-    }
+    default         Gauss linear;
 }
 
-relaxationFactors
+divSchemes
 {
-    fields
-    {
-        p           0.7;
-    }
-    equations
-    {
-        U               0.2;
-        "(k|epsilon)"   0.7;
-    }
+    default         none;
+
+    div(phi,U)      bounded Gauss upwind;
+
+    turbulence      bounded Gauss upwind;
+    "div\(phi,(epsilon|omega|nuTilda|phit)\)"            $turbulence;
+    "div\(phi,(k|kl|kt)\)"            $turbulence;
+
+    div(phi,R)      $turbulence;
+    div(R)          Gauss linear;
+
+    div(nonlinearStress) Gauss;
+
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
 }
 
+laplacianSchemes
+{
+    default         Gauss linear limited corrected 0.33;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         limited corrected 0.33;
+}
+
+wallDist
+{
+    method meshWave;
+}
 // ************************************************************************* //
